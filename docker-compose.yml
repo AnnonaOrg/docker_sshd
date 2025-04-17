@@ -1,0 +1,13 @@
+#version: '3.8'
+services:
+  sshd:
+    image:  annona/sshd:latest
+    build: .
+    container_name: sshd
+    restart: always
+    ports:
+      - "2222:22"  # 映射本地 2222 端口到容器的 22 端口
+    volumes:
+      - ./id_rsa.pub:/root/.ssh/authorized_keys:ro  # 挂载 SSH 公钥
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
